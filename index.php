@@ -45,9 +45,11 @@
             ],
             "subsection" => [
                 "subtitle" => "Determining the country associated with your account",
-                "content" => "When you create a new account, we associate your account with a country based on where you created your Google Account. For accounts at least a year old, we use the country from which you usually access Google services — typically where you’ve spent the most time in the last year.",
+                "content" => [
+                            "When you create a new account, we associate your account with a country based on where you created your Google Account. For accounts at least a year old, we use the country from which you usually access Google services — typically where you’ve spent the most time in the last year.",
                             "Frequent travel doesn’t generally affect the country associated with your account. If you move to a new country, it can take about a year for your country association to update.",
                             "If the country associated with your account doesn’t correspond to your country of residence, it could be because of a difference between your country of work and residence, because you’ve installed a Virtual Private Network (VPN) to mask your IP address, or because you live close to a territorial border. Contact us if you think your country association is wrong.",
+                ],
             ]   
         ],
         [
@@ -76,7 +78,16 @@
                        echo $paragraph . "<br>";
                        echo "<br>";  
                    }
-                   
+                   if($section['subsection']) {
+                       $subtitle = $section['subsection']['subtitle'];
+                       echo "<h3>$subtitle</h3>";
+
+                    //    foreach($section['subsection']['content'] as $content) {
+
+                    //    };
+                       
+                       
+                   }
                 }
             ?>
     </div>
