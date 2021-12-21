@@ -67,6 +67,20 @@
     ]
     ?>
 
+    <div class="container">
+            <?php
+                foreach($faq as $section) {
+                    $title = $section['question'];
+                   echo "<h2> $title </h2>";
+                   foreach($section['answer'] as $paragraph) {
+                       echo $paragraph . "<br>";
+                       echo "<br>";  
+                   }
+                   
+                }
+            ?>
+    </div>
+
 </body>
 
 </html>
