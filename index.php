@@ -78,14 +78,17 @@
                        echo $paragraph . "<br>";
                        echo "<br>";  
                    }
+                
                    if($section['subsection']) {
+                //  subsection title
                        $subtitle = $section['subsection']['subtitle'];
                        echo "<h3>$subtitle</h3>";
-
-                    //    foreach($section['subsection']['content'] as $content) {
-
-                    //    };
-                       
+                    $subsectionText = $section['subsection']['content'];
+                //  subsection text
+                    foreach($subsectionText as $content) {
+                        echo $content . "<br>";
+                        echo "<br>";
+                    }  
                        
                    }
                 }
