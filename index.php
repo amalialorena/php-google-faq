@@ -38,23 +38,27 @@
             "question" => "Why is my account associated with a country?",
             "answer" => [
                 "Your account is associated with a country (or territory) in the Terms of Service so that we can determine two things:",
-                "The Google affiliate that provides the services, that processes your information, and that is responsible for complying with applicable privacy laws. Generally, Google offers its consumer services through either of two companies:",
-                "Google Ireland Limited, if you’re located in the European Economic Area (EU countries plus Iceland, Liechtenstein, and Norway) or Switzerland",
-                "Google LLC, based in the United States, for the rest of the world",
-                "The version of the terms that govern our relationship, which can vary depending on local laws",
+                "ol" => [
+                    "The Google affiliate that provides the services, that processes your information, and that is responsible for complying with applicable privacy laws. Generally, Google offers its consumer services through either of two companies:",
+                    "ol" => [
+                        "Google Ireland Limited, if you’re located in the European Economic Area (EU countries plus Iceland, Liechtenstein, and Norway) or Switzerland",
+                        "Google LLC, based in the United States, for the rest of the world",
+                    ],
+                    "The version of the terms that govern our relationship, which can vary depending on local laws",
+                ],
                 "Keep in mind that Google services are essentially the same regardless of the affiliate that provides the services or your country association."
             ],
             "subsection" => [
                 "subtitle" => "Determining the country associated with your account",
                 "content" => [
-                            "When you create a new account, we associate your account with a country based on where you created your Google Account. For accounts at least a year old, we use the country from which you usually access Google services — typically where you’ve spent the most time in the last year.",
-                            "Frequent travel doesn’t generally affect the country associated with your account. If you move to a new country, it can take about a year for your country association to update.",
-                            "If the country associated with your account doesn’t correspond to your country of residence, it could be because of a difference between your country of work and residence, because you’ve installed a Virtual Private Network (VPN) to mask your IP address, or because you live close to a territorial border. Contact us if you think your country association is wrong.",
+                    "When you create a new account, we associate your account with a country based on where you created your Google Account. For accounts at least a year old, we use the country from which you usually access Google services — typically where you’ve spent the most time in the last year.",
+                    "Frequent travel doesn’t generally affect the country associated with your account. If you move to a new country, it can take about a year for your country association to update.",
+                    "If the country associated with your account doesn’t correspond to your country of residence, it could be because of a difference between your country of work and residence, because you’ve installed a Virtual Private Network (VPN) to mask your IP address, or because you live close to a territorial border. Contact us if you think your country association is wrong.",
                 ],
-            ]   
+            ]
         ],
         [
-            "question" => "How can I remove information about myself from Google's search results?", 
+            "question" => "How can I remove information about myself from Google's search results?",
             "answer" => [
                 "Google search results are a reflection of the content publicly available on the web. Search engines can't remove content directly from websites, so removing search results from Google wouldn't remove the content from the web. If you want to remove something from the web, you should contact the webmaster of the site the content is posted on and ask him or her to make a change. Additionally, if under European data protection law, you would like to request removal of certain information about you that appears in Google's search results, please click here. Once the content has been removed and Google has noted the update, the information will no longer appear in Google's search results. If you have an urgent removal request, you can also visit our help page for more information.",
             ],
@@ -71,29 +75,58 @@
     ?>
 
     <div class="container">
-            <?php
-                foreach($faq as $section) {
-                    $title = $section['question'];
-                   echo "<h2> $title </h2>";
-                   foreach($section['answer'] as $paragraph) {
-                       echo $paragraph . "<br>";
-                       echo "<br>";  
-                   }
-                
-                   if($section['subsection']) {
-                //  subsection title
-                       $subtitle = $section['subsection']['subtitle'];
-                       echo "<h3>$subtitle</h3>";
-                    $subsectionText = $section['subsection']['content'];
-                //  subsection text
-                    foreach($subsectionText as $content) {
-                        echo $content . "<br>";
+        <?php
+        // function for generating inner ol a. and b.
+        function generateInnerOl ($node) {
+            echo "<ol type='a'>";
+            foreach ($node as $p) {
+                echo "<li>" . $p .  "</li>";
+                echo "<br>";
+            }
+            echo "</ol>";
+        }
+        //function for generating ol 1. and 2.
+            function generateOl ($node) {
+                echo "<ol>";
+                foreach ($node as $p) {
+                    if (is_array($p)) {
                         echo "<br>";
-                    }  
-                       
-                   }
+                        generateInnerOl($p);
+                    } else {
+                        echo "<li>"  . $p .  "</li>";
+                    }
                 }
-            ?>
+                echo "</ol>";
+            }
+
+        foreach ($faq as $key => $section) {
+            //questions
+            $title = $section['question'];
+            echo "<h2> $title </h2>";
+
+            foreach ($section['answer'] as $paragraph) {
+             //   answers
+                if (is_array($paragraph)) {
+                    generateOl($paragraph);
+                } else {
+                    echo $paragraph . "<br>";
+                    echo "<br>";
+                }
+            }
+
+            if ($section['subsection']) {
+                //  subsection title
+                $subtitle = $section['subsection']['subtitle'];
+                echo "<h3>$subtitle</h3>";
+                $subsectionText = $section['subsection']['content'];
+                //  subsection text
+                foreach ($subsectionText as $content) {
+                    echo $content . "<br>";
+                    echo "<br>";
+                }
+            }
+        }
+        ?>
     </div>
 
 </body>
